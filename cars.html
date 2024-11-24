@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Taxi System</title>
+    <link rel="stylesheet" href="cars.css">
+</head>
+<body>
+    <h1>College Taxi Booking System</h1>
+    <form id="bookingForm">
+        <label for="student_id">Student ID:</label>
+        <input type="text" id="student_id" required>
+        
+        <label for="no_of_people">Number of People:</label>
+        <input type="number" id="no_of_people" required>
+        
+        <label for="pickup_location">Pickup Location:</label>
+        <input type="text" id="pickup_location" required>
+        
+        <label for="drop_location">Drop Location:</label>
+        <input type="text" id="drop_location" required>
+        
+        <label for="time">Time:</label>
+        <input type="time" id="time" required>
+        
+        <label for="car_type">Car Type:</label>
+        <select id="car_type">
+            <option value="Sedan">Sedan</option>
+            <option value="SUV">SUV</option>
+        </select>
+        
+        <label for="day">Day:</label>
+        <input type="date" id="day" required>
+        
+        <button type="submit">Book Taxi</button>
+    </form>
+    <script src="script.js"></script>
+</body>
+</html>
