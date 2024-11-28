@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Available Taxis</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      /* availability.css */
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      table {
+        width: 80%;
+        margin: 20px 0;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      table th,
+      table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      table th {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      table td {
+        background-color: #fafafa;
+      }
+
+      table tr:nth-child(even) td {
+        background-color: #f1f1f1;
+      }
+
+      table tr:hover td {
+        background-color: #f0f0f0;
+      }
+
+      @media (max-width: 768px) {
+        table {
+          width: 100%;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+      }
+    </style>
+    <script>
+      // Function to fetch available taxis
+      async function fetchAvailability() {
+        try {
+          const response = await fetch("/availability");
+          const cars = await response.json();
+
+          const tableBody = document.querySelector("#carTable tbody");
+          tableBody.innerHTML = ""; // Clear any existing rows
+
+          // Populate table with car data
+          cars.forEach((car) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                        <td>${car.Car_ID}</td>
+                        <td>${car.Car_Type}</td>
+                        <td>${car.Driver_Name}</td>
+                        <td>${car.Driver_Phone}</td>
+                        <td>${
+                          car.Availability_Status
+                            ? "Available"
+                            : "Not Available"
+                        }</td>
+                    `;
+            tableBody.appendChild(row);
+          });
+        } catch (error) {
+          alert("An error occurred while fetching data: " + error.message);
+        }
+      }
+
+      // Fetch data when the page loads
+      window.onload = fetchAvailability;
+    </script>
+  </head>
+  <body>
+    <h1>Available Taxis</h1>
+    <table id="carTable" border="1">
+      <thead>
+        <tr>
+          <th>Car ID</th>
+          <th>Car Type</th>
+          <th>Driver Name</th>
+          <th>Driver Phone</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </body>
+</html>

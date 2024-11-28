@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Request a Taxi</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      /* request.css */
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f9f9f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      form {
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+      }
+
+      label {
+        font-size: 1.1em;
+        margin-bottom: 5px;
+        display: block;
+        color: #555;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="time"],
+      input[type="date"],
+      select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1em;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      button:active {
+        background-color: #388e3c;
+      }
+
+      form input,
+      form select {
+        display: block;
+        margin-bottom: 15px;
+      }
+
+      form input[type="submit"] {
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      // Function to handle form submission
+      async function submitRequest(event) {
+        event.preventDefault(); // Prevent form from reloading the page
+
+        // Collect form data
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData);
+
+        try {
+          // Send POST request to the server
+          const response = await fetch("/request", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+          if (response.ok) {
+            alert(result.message); // Success message
+            event.target.reset(); // Clear the form
+          } else {
+            alert("Error: " + result.message); // Error message
+          }
+        } catch (error) {
+          alert("An error occurred: " + error.message);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Request a Taxi</h1>
+    <form id="taxiRequestForm" onsubmit="submitRequest(event)">
+      <label for="Student_ID">Student ID:</label>
+      <input type="number" id="Student_ID" name="Student_ID" required /><br />
+
+      <label for="Student_Phone">Phone Number:</label>
+      <input
+        type="text"
+        id="Student_Phone"
+        name="Student_Phone"
+        required
+      /><br />
+
+      <label for="No_of_People">Number of People:</label>
+      <input
+        type="number"
+        id="No_of_People"
+        name="No_of_People"
+        required
+      /><br />
+
+      <label for="Pickup_Location">Pickup Location:</label>
+      <input
+        type="text"
+        id="Pickup_Location"
+        name="Pickup_Location"
+        required
+      /><br />
+
+      <label for="Drop_Location">Drop Location:</label>
+      <input
+        type="text"
+        id="Drop_Location"
+        name="Drop_Location"
+        required
+      /><br />
+
+      <label for="Time">Time:</label>
+      <input type="time" id="Time" name="Time" required /><br />
+
+      <label for="Car_Type">Car Type:</label>
+      <select id="Car_Type" name="Car_Type" required>
+        <option value="Sedan">Sedan</option>
+        <option value="SUV">SUV</option></select
+      ><br />
+
+      <label for="Day">Day:</label>
+      <input type="date" id="Day" name="Day" required /><br />
+
+      <button type="submit">Submit Request</button>
+    </form>
+  </body>
+</html>
